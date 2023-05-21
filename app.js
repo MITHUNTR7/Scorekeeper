@@ -23,10 +23,6 @@ selectScore.addEventListener('change',()=>{
 })
 
 
-
-
-
-
 btnOne.addEventListener('click', () => {
 
     if (isGameOver === false) {
@@ -36,6 +32,8 @@ btnOne.addEventListener('click', () => {
             isGameOver = true
             score1.classList.add('winner')
             score2.classList.add('loser')
+            btnOne.disabled = true
+            btnTwo.disabled = true
         }
     }
 
@@ -50,6 +48,8 @@ btnTwo.addEventListener('click', () => {
             isGameOver = true
             score1.classList.add('loser')
             score2.classList.add('winner')
+            btnOne.disabled = true
+            btnTwo.disabled = true
         }
     }
     
@@ -67,4 +67,6 @@ function resetfn(){
     score2.innerText = 0
     score1.classList.remove('winner', 'loser')
     score2.classList.remove('winner', 'loser')
+    btnOne.disabled = false
+    btnTwo.disabled = false
 }

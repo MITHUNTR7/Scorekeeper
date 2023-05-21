@@ -1,72 +1,71 @@
-const btnOne = document.querySelector('#player1')
-const btnTwo = document.querySelector('#player2')
+const p1 = {
+    score: 0,
+    display: document.querySelector('#score1'),
+    button: document.querySelector('#player1')
+
+}
+
+const p2 = {
+    score: 0,
+    display: document.querySelector('#score2'),
+    button: document.querySelector('#player2')
+
+}
+
 const reset = document.querySelector('#reset')
 const selectScore = document.querySelector('#scores')
-
-
-let score1 = document.querySelector('#score1')
-let score2 = document.querySelector('#score2')
-
-
 let winningScore = 6
 let isGameOver = false
 
-let p1Score = 0
-let p2Score = 0
+selectScore.addEventListener('change', () => {
 
-
-selectScore.addEventListener('change',()=>{
-    
     winningScore = parseInt(selectScore.value)
     resetfn()
-    
+
 })
 
-
-btnOne.addEventListener('click', () => {
+function scoreUpdate(player, opponent) {
 
     if (isGameOver === false) {
-        p1Score = p1Score + 1
-        score1.innerText = p1Score
-        if (p1Score === winningScore){
+        player.score = player.score + 1
+        player.display.innerText = player.score
+        if (player.score === winningScore) {
             isGameOver = true
-            score1.classList.add('winner')
-            score2.classList.add('loser')
-            btnOne.disabled = true
-            btnTwo.disabled = true
+            player.display.classList.add('winner')
+            opponent.display.classList.add('loser')
+            player.button.disabled = true
+            opponent.button.disabled = true
         }
     }
 
-})
 
-btnTwo.addEventListener('click', () => {
+}
 
-    if (isGameOver === false) {
-        p2Score = p2Score + 1
-        score2.innerText = p2Score
-        if (p2Score === winningScore) {
-            isGameOver = true
-            score1.classList.add('loser')
-            score2.classList.add('winner')
-            btnOne.disabled = true
-            btnTwo.disabled = true
-        }
-    }
-    
+p1.button.addEventListener('click', () => {
+
+    scoreUpdate(p1, p2)
 
 })
 
-reset.addEventListener('click',resetfn)
+p2.button.addEventListener('click', () => {
+
+    scoreUpdate(p2, p1)
 
 
-function resetfn(){
+})
+
+reset.addEventListener('click', resetfn)
+
+
+function resetfn() {
+
     isGameOver = false
-    p1Score = 0
-    p2Score = 0
-    score1.innerText = 0
-    score2.innerText = 0
-    score1.classList.remove('winner', 'loser')
-    score2.classList.remove('winner', 'loser')
-    btnOne.disabled = false
-    btnTwo.disabled = false
+
+    for (let p of [p1, p2]) {
+        p.score = 0
+        p.display.innerText = 0
+        p.display.classList.remove('winner', 'loser')
+        p.button.disabled = false
+    }
+
 }
